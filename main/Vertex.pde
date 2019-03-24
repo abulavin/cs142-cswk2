@@ -1,13 +1,13 @@
 public class Vertex {
   
-  private char name;
   private ArrayList<Edge> edges;
   public PVector location; 
   
-  public Vertex(char name) {
-    this.name = name;
+  public Vertex(float x, float y) {
     this.edges = new ArrayList<Edge>();
     this.location = new PVector();
+    this.location.x = x;
+    this.location.y = y;
   }
   
   public boolean isAdjacent(Vertex v) {
@@ -50,13 +50,4 @@ public class Vertex {
     ellipse(location.x,location.y,10,10);
     delay(100);
   }
-  
-  public char getName() {
-    return this.name;
-  }
-  
-  public String toString() {
-    return this.name + " Adjacent: " + edges;
-  }
-  
 }

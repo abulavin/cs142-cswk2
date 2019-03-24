@@ -15,8 +15,4 @@ public class Edge {
   public float weight() {
     return this.weight;
   }
-  
-  public String toString() {
-    return Character.toString(dest.getName());
-  }
 }
