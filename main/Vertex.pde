@@ -2,12 +2,14 @@ public class Vertex {
   
   private ArrayList<Edge> edges;
   public PVector location; 
+  private int n;
   
-  public Vertex(float x, float y) {
+  public Vertex(int n,float x, float y) {
     this.edges = new ArrayList<Edge>();
     this.location = new PVector();
     this.location.x = x;
     this.location.y = y;
+    this.n = n;
   }
   
   public boolean isAdjacent(Vertex v) {
@@ -48,6 +50,6 @@ public class Vertex {
       line(location.x,location.y,dest.location.x,dest.location.y);
     }
     ellipse(location.x,location.y,10,10);
-    delay(100);
+    text(n,location.x+7,location.y+7);
   }
 }
