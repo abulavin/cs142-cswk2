@@ -27,10 +27,12 @@ public class Vertex {
   }
   
   public void addEdge(Vertex v, float weight) {
-    if(!isAdjacent(v)) {
-      Edge e = new Edge(v,weight);
-      this.edges.add(e);
-      v.addEdge(this,weight);
+    if(v != null) {
+      if(!isAdjacent(v)) {
+        Edge e = new Edge(v,weight);
+        this.edges.add(e);
+        v.addEdge(this,weight);
+      }
     }
   }
   
