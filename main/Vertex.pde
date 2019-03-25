@@ -3,6 +3,8 @@ public class Vertex {
   private ArrayList<Edge> edges;
   public PVector location; 
   private int n;
+  public State visited;
+  private String label;
   
   public Vertex(int n,float x, float y) {
     this.edges = new ArrayList<Edge>();
@@ -10,6 +12,8 @@ public class Vertex {
     this.location.x = x;
     this.location.y = y;
     this.n = n;
+    this.label = Character.toString(((char) (65+n)));
+    this.visited = State.UNVISITED;
   }
   
   public boolean isAdjacent(Vertex v) {
@@ -26,7 +30,7 @@ public class Vertex {
     this.location.y = y;
   }
   
-  public void addEdge(Vertex v, float weight) {
+  public void addEdge(Vertex v, int weight) {
     if(v != null) {
       if(!isAdjacent(v)) {
         Edge e = new Edge(v,weight);
@@ -34,24 +38,54 @@ public class Vertex {
         v.addEdge(this,weight);
       }
     }
-  }
+}
   
-  public Vertex[] getAdjacent() {
-    Vertex[] adj = new Vertex[edges.size()];
+  public Edge[] getAdjacent() {
+    Edge[] adj = new Edge[edges.size()];
     for(int i =  0; i < adj.length; i++) {
-      adj[i] = edges.get(i).getDest();
+      adj[i] = edges.get(i);
     }
     return adj;
   }
   
+  public int index() {
+    return this.n;
+  }
+  
   public void display() {
     stroke(0);
-    fill(0);
     for(Edge e: edges) {
       Vertex dest = e.getDest();
-      line(location.x,location.y,dest.location.x,dest.location.y);
+      stroke(e.getColour());
+      line(this.location.x,this.location.y,dest.location.x,dest.location.y);
+      
+      // Text label
+      PVector label = PVector.sub(dest.location,this.location)
+                             .mult(0.5)
+                             .add(this.location);
+      String weight = e.weight() + "";
+      textSize(10);
+      textAlign(CORNER);
+      text(weight,label.x,label.y);
+    }
+    
+     switch(this.visited) {
+      case UNVISITED: fill(#D30F0F);
+      case CURRENT: fill(#D88327);
+      case VISITED: fill(#33B409);
     }
     ellipse(location.x,location.y,10,10);
-    text(n,location.x+7,location.y+7);
+    textAlign(CENTER,BOTTOM);
+    textSize(24);
+    text(this.label,location.x,location.y-5);
+    
+  }
+  
+  public void mark(State s) {
+    this.visited = s;
+  }
+  
+  public String toString() {
+    return this.label;
   }
 }

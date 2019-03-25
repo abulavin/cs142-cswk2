@@ -1,12 +1,82 @@
-Graph g;
+Graph graph;
 
 void setup() {
   size(800,600);
-  g = new Graph(20);
-  g.generateGraph();
+  graph = new Graph(15);
+  graph.generateGraph();
 }
 
 void draw() {
   background(200);
-  g.display();  
+  graph.display();
+  Vertex[] jumps = djikstra(graph); //<>//
+  ArrayList<Vertex> verticies = graph.getVerticies(); //<>//
+  for(Vertex v: verticies) {
+    int i = v.index(); //<>//
+    print(v + ": ");
+    while(jumps[i] != null) {
+      print(" -> " + jumps[i]);
+      i = jumps[i].index();
+    }
+    println("");
+  }
+  noLoop(); //<>//
 }
+Vertex[] djikstra(Graph g) {
+ ArrayList<Vertex> verticies = new ArrayList<Vertex>();
+ // Copy across graph verticies to new 'set'
+ verticies.addAll(g.getVerticies());
+ Vertex[] prev = new Vertex[verticies.size()];
+ int[] dist = new int[verticies.size()];
+ dist[0] = 0;
+ 
+ for(int i = 1; i < dist.length; i ++) {
+   dist[i] = Integer.MAX_VALUE;
+ }
+
+ while(!verticies.isEmpty()) {
+   // Find vertex u with min dist[u]
+   int min = Integer.MAX_VALUE;
+   for(int i = 0; i < dist.length; i++) {
+     if(dist[i] < min) {
+       min = i;
+     }
+   }
+   Vertex u = verticies.get(min);
+   u.mark(State.CURRENT);
+   verticies.remove(u);
+   
+   for(Edge e : u.getAdjacent()) {
+     Vertex v = e.getDest();
+     int newDist = dist[u.index()] + e.weight();
+     if( newDist < dist[v.index()]) {
+       dist[v.index()] = newDist;
+       prev[v.index()] = u; 
+     }
+   }
+ }
+ return prev;
+}
+
+// 1  function Dijkstra(Graph, source):
+// 2
+// 3      create vertex set Q
+// 4
+// 5      for each vertex v in Graph:             
+// 6          dist[v] ← INFINITY                  
+// 7          prev[v] ← UNDEFINED                 
+// 8          add v to Q                      
+//10      dist[source] ← 0                        
+//11      
+//12      while Q is not empty:
+//13          u ← vertex in Q with min dist[u]    
+//14                                              
+//15          remove u from Q 
+//16          
+//17          for each neighbor v of u:           
+//18              alt ← dist[u] + length(u, v)
+//19              if alt < dist[v]:               
+//20                  dist[v] ← alt 
+//21                  prev[v] ← u 
+//22
+//23      return dist[], prev[]

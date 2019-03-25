@@ -1,18 +1,28 @@
 public class Edge {
 
-  private float weight;
+  private int weight;
   private Vertex dest;
+  private color colour;
   
-  Edge(Vertex dest, float weight) {
+  Edge(Vertex dest, int weight) {
     this.dest = dest;
     this.weight = weight;
+    this.colour = #000000;
+  }
+
+  public void markEdge() {
+    this.colour = #D30F0F;
+  }
+
+  public color getColour() {
+    return this.colour;
   }
 
   public Vertex getDest() {
     return this.dest;
   }
   
-  public float weight() {
+  public int weight() {
     return this.weight;
   }
 }

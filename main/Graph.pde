@@ -2,6 +2,7 @@ public class Graph {
 
   private ArrayList<Vertex> graph;
   private int points;
+  private Vertex[][] matrix;
   
   public Graph(int points) {
     this.graph = new ArrayList<Vertex>();
@@ -41,7 +42,7 @@ public class Graph {
     int columns = (int) ceil((float) this.points/rows);
     
     // Construct graph matrix
-    Vertex[][] matrix = new Vertex[columns][rows];
+    this.matrix = new Vertex[columns][rows];
     int k = 0;
     for(int i = 0; i < columns; i++ ) {
       for(int j = 0; j < rows; j++) {
@@ -49,36 +50,55 @@ public class Graph {
           matrix[i][j] = graph.get(k++);
       }
     }
-
-    // Assign edges
+    assignEdges(columns,rows);
+  }
+  
+  private void assignEdges(int columns, int rows) {
     for(int i = 0; i < columns-1; i++ ) {
       for(int j = 0; j < rows; j++) {
+        Vertex v = matrix[i][j];
+        int rand1, rand2, rand3 = 0;
+        
+        // Generate 3 different random numbers
+        do {
+          rand1 = (int) random(30,110);
+          rand2 =  (int) random(30,110);
+          rand3 = (int) random(30,110);
+        } while(rand1 == rand2 || rand2 == rand3);
+        
         if(j == 0) {
-          matrix[i][j].addEdge(matrix[i][j+1],100);
-          matrix[i][j].addEdge(matrix[i+1][j],100);
+          v.addEdge(matrix[i][j+1],rand1);
+          v.addEdge(matrix[i+1][j],rand2); 
         } else if (j == rows-1) {
-          matrix[i][j].addEdge(matrix[i+1][j-1],100);
-          matrix[i][j].addEdge(matrix[i+1][j],100);
+          if(j % 2 == 0) {
+            v.addEdge(matrix[i][j-1],rand1);
+            v.addEdge(matrix[i+1][j],rand2);
+          } else {
+            v.addEdge(matrix[i+1][j-1],rand1);
+            v.addEdge(matrix[i+1][j],rand2);
+          }
         } else {
           if(j % 2 == 0) {
-            matrix[i][j].addEdge(matrix[i][j-1],100);
-            matrix[i][j].addEdge(matrix[i+1][j],100);
-            matrix[i][j].addEdge(matrix[i][j+1],100);
+            v.addEdge(matrix[i][j-1],rand1);
+            v.addEdge(matrix[i+1][j],rand2);
+            v.addEdge(matrix[i][j+1],rand3);
           } else {
-            matrix[i][j].addEdge(matrix[i+1][j-1],100);
-            matrix[i][j].addEdge(matrix[i+1][j],100);
-            matrix[i][j].addEdge(matrix[i+1][j+1],100);      
+            v.addEdge(matrix[i+1][j-1],rand1);
+            v.addEdge(matrix[i+1][j],rand2);
+            v.addEdge(matrix[i+1][j+1],rand3);      
           }
         }
       }
-    }
-    
-    
+    } 
   }
   
   public void display() {
     for(Vertex v: graph) {
       v.display();
     }
+  }
+  
+  public ArrayList<Vertex> getVerticies() {
+    return this.graph;
   }
 }
