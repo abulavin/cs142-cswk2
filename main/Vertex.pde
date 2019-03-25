@@ -69,16 +69,19 @@ public class Vertex {
       text(weight,label.x,label.y);
     }
     
-     switch(this.visited) {
+    switch(this.visited) {
       case UNVISITED: fill(#D30F0F);
+                      break;
       case CURRENT: fill(#D88327);
+                    break;
       case VISITED: fill(#33B409);
+                    break;
     }
+    stroke(0);
     ellipse(location.x,location.y,10,10);
     textAlign(CENTER,BOTTOM);
     textSize(24);
     text(this.label,location.x,location.y-5);
-    
   }
   
   public void mark(State s) {

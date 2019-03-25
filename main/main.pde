@@ -1,40 +1,31 @@
 Graph graph;
+int[] dist;
+ArrayList<Vertex> verticies;
+Vertex[] prev;
 
 void setup() {
   size(800,600);
+  frameRate(0.5);
   graph = new Graph(15);
   graph.generateGraph();
-}
-
-void draw() {
-  background(200);
-  graph.display();
-  Vertex[] jumps = djikstra(graph); //<>//
-  ArrayList<Vertex> verticies = graph.getVerticies(); //<>//
-  for(Vertex v: verticies) {
-    int i = v.index(); //<>//
-    print(v + ": ");
-    while(jumps[i] != null) {
-      print(" -> " + jumps[i]);
-      i = jumps[i].index();
-    }
-    println("");
-  }
-  noLoop(); //<>//
-}
-Vertex[] djikstra(Graph g) {
- ArrayList<Vertex> verticies = new ArrayList<Vertex>();
- // Copy across graph verticies to new 'set'
- verticies.addAll(g.getVerticies());
- Vertex[] prev = new Vertex[verticies.size()];
- int[] dist = new int[verticies.size()];
+  
+ verticies = new ArrayList<Vertex>();
+ // Copy across graph verticies to new 'set' //<>//
+ verticies.addAll(graph.getVerticies());
+ prev = new Vertex[verticies.size()]; //<>//
+ dist = new int[verticies.size()];
  dist[0] = 0;
  
  for(int i = 1; i < dist.length; i ++) {
    dist[i] = Integer.MAX_VALUE;
  }
+}
+ //<>//
+void draw() {
+  background(200); 
+  graph.display();
 
- while(!verticies.isEmpty()) {
+  if(!verticies.isEmpty()) {
    // Find vertex u with min dist[u]
    int min = Integer.MAX_VALUE;
    for(int i = 0; i < dist.length; i++) {
@@ -44,20 +35,36 @@ Vertex[] djikstra(Graph g) {
    }
    Vertex u = verticies.get(min);
    u.mark(State.CURRENT);
+   graph.display();
    verticies.remove(u);
    
    for(Edge e : u.getAdjacent()) {
      Vertex v = e.getDest();
+     e.markEdge();
+     graph.display();
+     
      int newDist = dist[u.index()] + e.weight();
      if( newDist < dist[v.index()]) {
        dist[v.index()] = newDist;
        prev[v.index()] = u; 
      }
    }
+   u.mark(State.VISITED);
+   return;
  }
- return prev;
+ 
+   // Print out distances //<>//
+  ArrayList<Vertex> verticies = graph.getVerticies();
+  for(Vertex v: verticies) {
+    int i = v.index();
+    print(v + ": ");
+    while(prev[i] != null) {
+      print(" -> " + prev[i]);
+      i = prev[i].index();
+    }
+    println("");
+  }
 }
-
 // 1  function Dijkstra(Graph, source):
 // 2
 // 3      create vertex set Q
