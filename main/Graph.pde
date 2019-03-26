@@ -62,7 +62,7 @@ public class Graph {
        .setValue(val)
        .setPosition(x, y)
        .setSize(15, 15)
-       .onPress(new CallbackListener() { // a callback function that will be called onPress
+       .onPress(new CallbackListener() {
          public void controlEvent(CallbackEvent theEvent) {
            drawPath((int) theEvent.getController().getValue());
          }
@@ -108,25 +108,23 @@ public class Graph {
     } 
   }
   
-  public void display(boolean delay) {
+  public void displayWithDelay() {
     background(200);
-    if(delay) {
       try {
-        drawGraph();
+        display();
         TimeUnit.MILLISECONDS.sleep(300);
       } catch (InterruptedException e) {
         println("InterruptedException at graph.display()");
       }
-    } else {
-      drawGraph();
-    }
   }
+  
   
   public Vertex get(int i) {
     return this.graph.get(i);
   }
   
-  private void drawGraph() {
+  public void display() {
+    background(200);
     for(Vertex v: graph) {
       v.displayEdges();
      }

@@ -11,9 +11,9 @@ boolean animationComplete;
 
 void setup() {
   size(800,600);
-  frameRate(60);
+  frameRate(120);
   cp5 = new ControlP5(this);
-  graph = new Graph(20);
+  graph = new Graph(26);
   graph.generateGraph();
   
   animationComplete = false;
@@ -28,11 +28,10 @@ void setup() {
    dist[i] = Integer.MAX_VALUE;
  }
  background(200);
- graph.display(false);
+ graph.display();
 }
 
 void draw() {
-  
   if(!animationComplete) {
     if(!verticies.isEmpty()) {
      // Find vertex u with min dist[u]
@@ -44,14 +43,14 @@ void draw() {
      }
      Vertex u = verticies.get(min);
      u.mark(State.CURRENT);
-     graph.display(true);
+     graph.displayWithDelay();
      
      verticies.remove(u);
      
      for(Edge e : u.getAdjacent()) {
        Vertex v = e.getDest();
        e.markEdge(u);
-       graph.display(true);
+       graph.displayWithDelay();
        
        int newDist = dist[u.index()] + e.weight();
        if( newDist < dist[v.index()]) {
@@ -63,7 +62,7 @@ void draw() {
      u.mark(State.VISITED);
    } else {
      animationComplete = true;
-     graph.display(false);
+     graph.display();
    }
   }
 }
@@ -80,7 +79,7 @@ Stack<Vertex> djikstra(int vertexIndex) {
 }
 
 void drawPath(int v) {
-  graph.display(false);
+  graph.display();
   
   // cant draw from source or while animation still running
   if(!(v == 0 || !animationComplete)) {

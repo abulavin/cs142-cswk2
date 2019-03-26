@@ -1,0 +1,50 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{graphicx}
+\graphicspath{ { ./img } }
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\usepackage{xcolor}
+
+\title{\textbf{CS142 Coursework II}}
+\author{Artemy Bulavin \\ 1812276}
+\date{}
+
+\begin{document}
+
+\maketitle
+% A summary of your research
+% A description of the algorithm/data set/system you are visualising
+% A description of the process/techniques you have used to visualise it
+% A justification of the visual choices you have made
+% An image/set of images showing the output – you might also want to 
+% include images of early work in progress
+% A reflection on how effective the visualisation is
+
+% MARKING CRITERIA:
+% Well written and shows evidence of sufficient research into the topic
+% Demonstrates that you have considered what makes a good visualisation
+% Shows a critical reflection on the final output
+% Well structured and well formatted
+% Includes comprehensive and relevant references to your research and
+% to your sources of inspiration.
+
+\section*{Introduction}
+\hrule
+\vspace{11pt}
+The aim of this visualisation is to demonstrate the process of Dijkstra's Shortest Path algorithm using 
+a simple graph with weighted edges, where colours of vertices and edges change based on the different stages
+of the algorithm.
+
+\section*{Dijkstra's Shortest Path Algorithm}
+
+Dijkstra's Shortest Path algorithm is a method for finding the shortest distance from a given
+source node to all other nodes in a simple, weighted graph \cite{djikstra1959note}. The version of the algorithm
+used in this visualisation is the original version, as opposed to min-priority queue implementation
+\cite{fredman1987fibonacci}.
+
+\bibliographystyle{plain}
+\bibliography{ref}
+
+
+\end{document}
