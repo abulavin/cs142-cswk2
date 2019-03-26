@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 Graph graph;
 int[] dist;
 ArrayList<Vertex> verticies;
@@ -6,7 +8,7 @@ Vertex[] prev;
 void setup() {
   size(800,600);
   frameRate(60);
-  graph = new Graph(26);
+  graph = new Graph(10);
   graph.generateGraph();
   
  verticies = new ArrayList<Vertex>();
@@ -19,11 +21,13 @@ void setup() {
  for(int i = 1; i < dist.length; i ++) {
    dist[i] = Integer.MAX_VALUE;
  }
+ background(200);
 }
  //<>//
 void draw() {
-  background(200); 
   graph.display();
+  
+  
   if(!verticies.isEmpty()) {
    // Find vertex u with min dist[u]
    int min = Integer.MAX_VALUE;
@@ -33,10 +37,15 @@ void draw() {
      }
    }
    Vertex u = verticies.get(min);
+   u.mark(State.CURRENT);
+   graph.display();
+   
    verticies.remove(u);
    
    for(Edge e : u.getAdjacent()) {
      Vertex v = e.getDest();
+     e.markEdge(u);
+     graph.display();
      
      int newDist = dist[u.index()] + e.weight();
      if( newDist < dist[v.index()]) {
@@ -44,9 +53,14 @@ void draw() {
        prev[v.index()] = u; 
      }
    }
- }
+   u.mark(State.VISITED);
+ } //<>//
+}
+
+void djikstra() {
+
  
-   // Print out distances //<>//
+   // Print out distances
   ArrayList<Vertex> verticies = graph.getVerticies();
   for(Vertex v: verticies) {
     int i = v.index();

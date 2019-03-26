@@ -93,11 +93,17 @@ public class Graph {
   }
   
   public void display() {
-    for(Vertex v: graph) {
-      v.displayEdges();
-    }
-    for(Vertex v: graph) {
-      v.displayVertex();
+    background(200);
+    try {
+      for(Vertex v: graph) {
+        v.displayEdges();
+      }
+      for(Vertex v: graph) {
+        v.displayVertex();
+      }
+      TimeUnit.MILLISECONDS.sleep(300);
+    } catch (InterruptedException e) {
+      println("InterruptedException at graph.display()");
     }
   }
   
