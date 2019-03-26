@@ -94,11 +94,15 @@ public class Graph {
   
   public void display() {
     for(Vertex v: graph) {
-      v.display();
+      v.displayEdges();
+    }
+    for(Vertex v: graph) {
+      v.displayVertex();
     }
   }
   
   public ArrayList<Vertex> getVerticies() {
     return this.graph;
   }
+  
 }

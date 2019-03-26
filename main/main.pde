@@ -5,8 +5,8 @@ Vertex[] prev;
 
 void setup() {
   size(800,600);
-  frameRate(0.5);
-  graph = new Graph(15);
+  frameRate(60);
+  graph = new Graph(26);
   graph.generateGraph();
   
  verticies = new ArrayList<Vertex>();
@@ -24,7 +24,6 @@ void setup() {
 void draw() {
   background(200); 
   graph.display();
-
   if(!verticies.isEmpty()) {
    // Find vertex u with min dist[u]
    int min = Integer.MAX_VALUE;
@@ -34,14 +33,10 @@ void draw() {
      }
    }
    Vertex u = verticies.get(min);
-   u.mark(State.CURRENT);
-   graph.display();
    verticies.remove(u);
    
    for(Edge e : u.getAdjacent()) {
      Vertex v = e.getDest();
-     e.markEdge();
-     graph.display();
      
      int newDist = dist[u.index()] + e.weight();
      if( newDist < dist[v.index()]) {
@@ -49,8 +44,6 @@ void draw() {
        prev[v.index()] = u; 
      }
    }
-   u.mark(State.VISITED);
-   return;
  }
  
    // Print out distances //<>//

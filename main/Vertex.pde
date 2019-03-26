@@ -52,7 +52,7 @@ public class Vertex {
     return this.n;
   }
   
-  public void display() {
+  public void displayEdges() {
     stroke(0);
     for(Edge e: edges) {
       Vertex dest = e.getDest();
@@ -66,9 +66,12 @@ public class Vertex {
       String weight = e.weight() + "";
       textSize(10);
       textAlign(CORNER);
+      fill(0);
       text(weight,label.x,label.y);
     }
-    
+  }
+  
+  public void displayVertex() {
     switch(this.visited) {
       case UNVISITED: fill(#D30F0F);
                       break;
