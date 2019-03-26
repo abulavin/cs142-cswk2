@@ -5,6 +5,7 @@ public class Vertex {
   private int n;
   public State visited;
   private String label;
+  public int dist;
   
   public Vertex(int n,float x, float y) {
     this.edges = new ArrayList<Edge>();
@@ -54,6 +55,7 @@ public class Vertex {
   
   public void displayEdges() {
     stroke(0);
+    strokeWeight(1);
     for(Edge e: edges) {
       Vertex dest = e.getDest();
       stroke(e.getColour());
@@ -93,5 +95,14 @@ public class Vertex {
   
   public String toString() {
     return this.label;
+  }
+  
+  public void highlight() {
+    fill(#02BBCE);
+    strokeWeight(1);
+    ellipse(location.x,location.y,10,10);
+    textAlign(CENTER,BOTTOM);
+    textSize(24);
+    text(this.label,location.x,location.y-5);
   }
 }

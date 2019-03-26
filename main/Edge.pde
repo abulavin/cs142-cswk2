@@ -15,7 +15,6 @@ public class Edge {
   }
 
   public void markEdge(Vertex v) {
-    this.colour = #D30F0F;
     for(Edge e: this.dest.getAdjacent()) {
       if(e.getDest().equals(v)) {
         e.markEdge();
@@ -24,7 +23,7 @@ public class Edge {
   }
   
   public void markEdge() {
-    this.colour = #D30F0F; //red
+    this.colour = #33B409; //green
   }
   
   public color getColour() {

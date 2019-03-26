@@ -18,9 +18,13 @@ public class Graph {
       for(int j = scale; j < height; j += scale) {
           if(n < points) {
             if(j % (2*scale) == 0) {
-              graph.add(new Vertex(n,i+(scale/2),j));
+              Vertex v = new Vertex(n,i+(scale/2),j);
+              graph.add(v);
+              createButton(v.toString(),n,i+(scale/2),j);
             } else {
-              graph.add(new Vertex(n,i,j));
+              Vertex v = new Vertex(n,i,j);
+              graph.add(v);
+              createButton(v.toString(),n,i,j);
             }
           n++;
         }
@@ -51,6 +55,18 @@ public class Graph {
       }
     }
     assignEdges(columns,rows);
+  }
+  
+  public void createButton(String name,int val, int x , int y) {
+    cp5.addButton(name)
+       .setValue(val)
+       .setPosition(x, y)
+       .setSize(15, 15)
+       .onPress(new CallbackListener() { // a callback function that will be called onPress
+         public void controlEvent(CallbackEvent theEvent) {
+           drawPath((int) theEvent.getController().getValue());
+         }
+       });
   }
   
   private void assignEdges(int columns, int rows) {
@@ -92,19 +108,35 @@ public class Graph {
     } 
   }
   
-  public void display() {
+  public void display(boolean delay) {
     background(200);
-    try {
-      for(Vertex v: graph) {
-        v.displayEdges();
+    if(delay) {
+      try {
+        drawGraph();
+        TimeUnit.MILLISECONDS.sleep(300);
+      } catch (InterruptedException e) {
+        println("InterruptedException at graph.display()");
       }
-      for(Vertex v: graph) {
-        v.displayVertex();
-      }
-      TimeUnit.MILLISECONDS.sleep(300);
-    } catch (InterruptedException e) {
-      println("InterruptedException at graph.display()");
+    } else {
+      drawGraph();
     }
+  }
+  
+  public Vertex get(int i) {
+    return this.graph.get(i);
+  }
+  
+  private void drawGraph() {
+    for(Vertex v: graph) {
+      v.displayEdges();
+     }
+     for(Vertex v: graph) {
+      v.displayVertex();
+     }
+  }
+  
+  public int size() {
+    return this.graph.size();
   }
   
   public ArrayList<Vertex> getVerticies() {

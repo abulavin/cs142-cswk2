@@ -1,96 +1,105 @@
 import java.util.concurrent.TimeUnit;
+import java.util.Stack;
+import controlP5.*;
 
 Graph graph;
 int[] dist;
 ArrayList<Vertex> verticies;
 Vertex[] prev;
+ControlP5 cp5;
+boolean animationComplete;
 
 void setup() {
   size(800,600);
   frameRate(60);
-  graph = new Graph(10);
+  cp5 = new ControlP5(this);
+  graph = new Graph(20);
   graph.generateGraph();
   
+  animationComplete = false;
  verticies = new ArrayList<Vertex>();
- // Copy across graph verticies to new 'set' //<>//
+ // Copy across graph verticies to new 'set'
  verticies.addAll(graph.getVerticies());
- prev = new Vertex[verticies.size()]; //<>//
+ prev = new Vertex[verticies.size()];
  dist = new int[verticies.size()];
  dist[0] = 0;
  
- for(int i = 1; i < dist.length; i ++) {
+ for(int i = 1; i < dist.length; i++) {
    dist[i] = Integer.MAX_VALUE;
  }
  background(200);
+ graph.display(false);
 }
- //<>//
+
 void draw() {
-  graph.display();
   
-  
-  if(!verticies.isEmpty()) {
-   // Find vertex u with min dist[u]
-   int min = Integer.MAX_VALUE;
-   for(int i = 0; i < dist.length; i++) {
-     if(dist[i] < min) {
-       min = i;
+  if(!animationComplete) {
+    if(!verticies.isEmpty()) {
+     // Find vertex u with min dist[u]
+     int min = Integer.MAX_VALUE;
+     for(int i = 0; i < dist.length; i++) {
+       if(dist[i] < min) {
+         min = i;
+       }
      }
-   }
-   Vertex u = verticies.get(min);
-   u.mark(State.CURRENT);
-   graph.display();
-   
-   verticies.remove(u);
-   
-   for(Edge e : u.getAdjacent()) {
-     Vertex v = e.getDest();
-     e.markEdge(u);
-     graph.display();
+     Vertex u = verticies.get(min);
+     u.mark(State.CURRENT);
+     graph.display(true);
      
-     int newDist = dist[u.index()] + e.weight();
-     if( newDist < dist[v.index()]) {
-       dist[v.index()] = newDist;
-       prev[v.index()] = u; 
+     verticies.remove(u);
+     
+     for(Edge e : u.getAdjacent()) {
+       Vertex v = e.getDest();
+       e.markEdge(u);
+       graph.display(true);
+       
+       int newDist = dist[u.index()] + e.weight();
+       if( newDist < dist[v.index()]) {
+         dist[v.index()] = newDist;
+         
+         prev[v.index()] = u; 
+       }
      }
+     u.mark(State.VISITED);
+   } else {
+     animationComplete = true;
+     graph.display(false);
    }
-   u.mark(State.VISITED);
- } //<>//
-}
-
-void djikstra() {
-
- 
-   // Print out distances
-  ArrayList<Vertex> verticies = graph.getVerticies();
-  for(Vertex v: verticies) {
-    int i = v.index();
-    print(v + ": ");
-    while(prev[i] != null) {
-      print(" -> " + prev[i]);
-      i = prev[i].index();
-    }
-    println("");
   }
 }
-// 1  function Dijkstra(Graph, source):
-// 2
-// 3      create vertex set Q
-// 4
-// 5      for each vertex v in Graph:             
-// 6          dist[v] ← INFINITY                  
-// 7          prev[v] ← UNDEFINED                 
-// 8          add v to Q                      
-//10      dist[source] ← 0                        
-//11      
-//12      while Q is not empty:
-//13          u ← vertex in Q with min dist[u]    
-//14                                              
-//15          remove u from Q 
-//16          
-//17          for each neighbor v of u:           
-//18              alt ← dist[u] + length(u, v)
-//19              if alt < dist[v]:               
-//20                  dist[v] ← alt 
-//21                  prev[v] ← u 
-//22
-//23      return dist[], prev[]
+
+Stack<Vertex> djikstra(int vertexIndex) {
+  // Build path from A with stack
+  Stack<Vertex> jumps = new Stack<Vertex>();
+    int i = vertexIndex; //<>//
+    while(prev[i] != null) {
+      jumps.push(prev[i]); //<>//
+      i = prev[i].index(); //<>//
+    }
+  return jumps;
+}
+
+void drawPath(int v) {
+  graph.display(false);
+  
+  // cant draw from source or while animation still running
+  if(!(v == 0 || !animationComplete)) {
+    Vertex dest = graph.get(v); //<>//
+    
+    Stack<Vertex> path = djikstra(v); //<>//
+    Vertex current = path.pop(); //<>//
+    stroke(#02BBCE); // light blue
+
+    while(!path.isEmpty()) { //<>//
+      Vertex next = path.pop(); //<>//
+      strokeWeight(2); //<>//
+      line(current.location.x,current.location.y,next.location.x,next.location.y); //<>//
+      current.highlight();
+      current = next; //<>//
+    } //<>//
+    strokeWeight(2);
+    line(current.location.x,current.location.y,dest.location.x,dest.location.y); //<>//
+    current.highlight();
+    dest.highlight();
+  }
+} //<>//
