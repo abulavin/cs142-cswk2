@@ -11,7 +11,7 @@ public class Graph {
 
   public void generateGraph() {
     int n = 0;
-    int scale = (int) width/round(sqrt(points) + 2);
+    int scale = (int) (width)/round(sqrt(points) + 2);
     int offset = round(scale / 2);
     // Generate coordinates 
     for (int i = offset; i < width; i += scale) {
@@ -42,10 +42,10 @@ public class Graph {
         rows = i;
         break;
       }
-    }
+    } //<>//
     int columns = (int) ceil((float) this.points/rows);
     
-    // Construct graph matrix
+    // Construct graph matrix //<>//
     this.matrix = new Vertex[columns][rows];
     int k = 0;
     for(int i = 0; i < columns; i++ ) {
@@ -82,6 +82,7 @@ public class Graph {
           rand3 = (int) random(30,110);
         } while(rand1 == rand2 || rand2 == rand3);
         
+        //Join edges based on the position of the node
         if(j == 0) {
           v.addEdge(matrix[i][j+1],rand1);
           v.addEdge(matrix[i+1][j],rand2); 
@@ -118,11 +119,6 @@ public class Graph {
       }
   }
   
-  
-  public Vertex get(int i) {
-    return this.graph.get(i);
-  }
-  
   public void display() {
     background(200);
     for(Vertex v: graph) {
@@ -131,6 +127,11 @@ public class Graph {
      for(Vertex v: graph) {
       v.displayVertex();
      }
+    drawTitle();
+  }
+  
+  public Vertex get(int i) {
+    return this.graph.get(i);
   }
   
   public int size() {
@@ -141,4 +142,8 @@ public class Graph {
     return this.graph;
   }
   
+  
+  public void setDist(int index, int dist) {
+    this.graph.get(index).dist = dist;
+  }
 }

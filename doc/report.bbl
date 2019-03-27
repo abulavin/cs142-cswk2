@@ -1,14 +1,44 @@
 \begin{thebibliography}{1}
 
+\bibitem{card1999readings}
+{Card, S. K., Mackinlay J. D., Shneiderman, B.}
+\newblock {\em Readings in information visualization: using vision to think}.
+\newblock San Francisco: Morgan Kaufmann, (1999).
+
 \bibitem{djikstra1959note}
-EW~Djikstra.
+{Djikstra, E. W.}
 \newblock A note on two problems in connection with graphs.
 \newblock {\em Numerische Mathematik}, 1:269--271, (1959).
 
 \bibitem{fredman1987fibonacci}
-Michael~L Fredman and Robert~Endre Tarjan.
+{Fredman, L. M., Tarjan, E. R.}
 \newblock Fibonacci heaps and their uses in improved network optimization
   algorithms.
 \newblock {\em Journal of the ACM (JACM)}, 34(3):596--615, (1987).
+
+\bibitem{mazza2009introduction}
+{Mazza, R.}
+\newblock {\em Introduction to information visualization}.
+\newblock London: Springer Science \& Business Media, (2009).
+
+\bibitem{tufte}
+E.~R. Tufte.
+\newblock {\em The Visual Display of Quantitative Information (2nd ed.)}.
+\newblock Cheshire, CT: Graphics Press, (2001).
+
+\bibitem{wiki:code}
+{Wikipedia contributors}.
+\newblock Dijkstra's algorithm --- {Wikipedia}{,} the free encyclopedia.
+\newblock
+  \url{https://en.wikipedia.org/w/index.php?title=Dijkstra%27s_algorithm&oldid=888813153},
+  2019.
+\newblock [Online; accessed 27-March-2019].
+
+\bibitem{wong2011points}
+{Wong, B.}
+\newblock {\em Points of view: Color blindness}.
+\newblock Nature Publishing Group, (2011).
+\newblock {\url{https://www.nature.com/articles/nmeth.1618} [Online; accessed
+  27-March-2019]}.
 
 \end{thebibliography}
